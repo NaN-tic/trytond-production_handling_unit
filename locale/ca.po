@@ -1,0 +1,95 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:production.handling_unit,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:production.handling_unit,code:"
+msgid "Code"
+msgstr "Codi"
+
+msgctxt "field:production.handling_unit,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:production.handling_unit,active:"
+msgid "Active"
+msgstr "Actiu"
+
+msgctxt "field:production.work.center.handling_unit.assignment,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:production.work.center.handling_unit.assignment,work_center:"
+msgid "Work Center"
+msgstr "Centre de treball"
+
+msgctxt "field:production.work.center.handling_unit.assignment,product:"
+msgid "Product"
+msgstr "Producte"
+
+msgctxt "field:production.work.center.handling_unit.assignment,uom:"
+msgid "UoM"
+msgstr "UdM"
+
+msgctxt "field:production.work.center.handling_unit.assignment,handling_unit:"
+msgid "Handling Unit"
+msgstr "Unitat de manipulació"
+
+msgctxt "field:production.work.center.handling_unit.assignment,quantity:"
+msgid "Quantity"
+msgstr "Quantitat"
+
+msgctxt "field:production.work.center.handling_unit.assignment,active:"
+msgid "Active"
+msgstr "Actiu"
+
+msgctxt "field:production.work.center,handling_unit_assignments:"
+msgid "Handling Unit Assignments"
+msgstr "Assignacions d'unitat de manipulació"
+
+msgctxt "field:product.product,production_handling_unit_assignments:"
+msgid "Production Handling Unit Assignments"
+msgstr "Assignacions d'unitat de manipulació a producció"
+
+msgctxt "field:production.work.cycle,handling_unit:"
+msgid "Handling Unit"
+msgstr "Unitat de manipulació"
+
+msgctxt "field:production.work.cycle,handling_unit_number:"
+msgid "Handling Unit Number"
+msgstr "Número d'unitat de manipulació"
+
+msgctxt "field:production.work.cycle,missing_units:"
+msgid "Missing Units"
+msgstr "Unitats mancants"
+
+msgctxt "field:production.routing.operation,handling_unit:"
+msgid "Handling Unit"
+msgstr "Unitat de manipulació"
+
+msgctxt "model:ir.action,name:act_production_handling_unit"
+msgid "Handling Units"
+msgstr "Unitats de manipulació"
+
+msgctxt "model:ir.action,name:act_work_center_handling_unit_assignment"
+msgid "Work Center HU Assignments"
+msgstr "Assignacions d'HU per centre"
+
+msgctxt "model:ir.ui.menu,name:menu_production_handling_unit_configuration"
+msgid "Unidad de Manipulación"
+msgstr "Unitat de manipulació"
+
+msgctxt "model:ir.message,text:msg_work_cycle_duplicate_handling_unit_number"
+msgid "Handling unit number \"%(handling_unit_number)s\" is already being used in production \"%(production)s\" or operation \"%(operation)s\" with an unfinished cycle. Continue anyway?"
+msgstr "El número d'unitat de manipulació \"%(handling_unit_number)s\" ja s'està fent servir a la producció \"%(production)s\" o a l'operació \"%(operation)s\" amb un cicle sense finalitzar. Continuar igualment?"
+
+msgctxt "model:production.handling_unit,name:"
+msgid "Handling Unit"
+msgstr "Unitat de manipulació"
+
+msgctxt "model:production.work.center.handling_unit.assignment,name:"
+msgid "Work Center Handling Unit Assignment"
+msgstr "Assignació d'unitat de manipulació per centre de treball"

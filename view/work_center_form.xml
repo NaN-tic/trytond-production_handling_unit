@@ -1,0 +1,7 @@
+<data>
+    <xpath expr="/form/field[@name='children']" position="after">
+        <newline/>
+        <label name="handling_unit_assignments"/>
+        <field name="handling_unit_assignments" colspan="4"/>
+    </xpath>
+</data>

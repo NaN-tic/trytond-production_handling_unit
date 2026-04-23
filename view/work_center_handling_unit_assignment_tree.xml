@@ -1,0 +1,9 @@
+<tree>
+    <field name="work_center"/>
+    <field name="product"/>
+    <field name="handling_unit"/>
+    <field name="quantity"/>
+    <field name="uom"/>
+    <field name="company"/>
+    <field name="active"/>
+</tree>

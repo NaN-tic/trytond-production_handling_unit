@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="routing_operation_view_form">
+            <field name="model">production.routing.operation</field>
+            <field name="inherit" ref="production_routing.operation_view_form"/>
+            <field name="name">routing_operation_form</field>
+        </record>
+    </data>
+</tryton>

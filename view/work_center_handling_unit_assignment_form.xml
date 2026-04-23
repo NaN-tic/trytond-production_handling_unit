@@ -1,0 +1,17 @@
+<form>
+    <label name="company"/>
+    <field name="company"/>
+    <label name="work_center"/>
+    <field name="work_center"/>
+    <label name="product"/>
+    <field name="product"/>
+    <label name="handling_unit"/>
+    <field name="handling_unit"/>
+    <label name="quantity"/>
+    <field name="quantity"/>
+    <label name="uom"/>
+    <field name="uom"/>
+
+    <label name="active"/>
+    <field name="active"/>
+</form>

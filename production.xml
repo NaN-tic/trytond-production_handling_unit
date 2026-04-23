@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="handling_unit_view_tree">
+            <field name="model">production.handling_unit</field>
+            <field name="type">tree</field>
+            <field name="name">handling_unit_tree</field>
+        </record>
+        <record model="ir.ui.view" id="handling_unit_view_form">
+            <field name="model">production.handling_unit</field>
+            <field name="type">form</field>
+            <field name="name">handling_unit_form</field>
+        </record>
+        <record model="ir.action.act_window" id="act_production_handling_unit">
+            <field name="name">Handling Units</field>
+            <field name="res_model">production.handling_unit</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_production_handling_unit_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="handling_unit_view_tree"/>
+            <field name="act_window" ref="act_production_handling_unit"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_production_handling_unit_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="handling_unit_view_form"/>
+            <field name="act_window" ref="act_production_handling_unit"/>
+        </record>
+
+        <record model="ir.ui.view" id="work_center_handling_unit_assignment_view_tree">
+            <field name="model">production.work.center.handling_unit.assignment</field>
+            <field name="type">tree</field>
+            <field name="name">work_center_handling_unit_assignment_tree</field>
+        </record>
+        <record model="ir.ui.view" id="work_center_handling_unit_assignment_view_form">
+            <field name="model">production.work.center.handling_unit.assignment</field>
+            <field name="type">form</field>
+            <field name="name">work_center_handling_unit_assignment_form</field>
+        </record>
+        <record model="ir.action.act_window" id="act_work_center_handling_unit_assignment">
+            <field name="name">Work Center HU Assignments</field>
+            <field name="res_model">production.work.center.handling_unit.assignment</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_work_center_handling_unit_assignment_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="work_center_handling_unit_assignment_view_tree"/>
+            <field name="act_window" ref="act_work_center_handling_unit_assignment"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_work_center_handling_unit_assignment_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="work_center_handling_unit_assignment_view_form"/>
+            <field name="act_window" ref="act_work_center_handling_unit_assignment"/>
+        </record>
+
+        <menuitem parent="production.menu_configuration"
+            sequence="60" id="menu_production_handling_unit_configuration"
+            name="Unidad de Manipulación"/>
+        <menuitem parent="menu_production_handling_unit_configuration"
+            action="act_production_handling_unit"
+            sequence="10" id="menu_production_handling_unit"/>
+        <menuitem parent="menu_production_handling_unit_configuration"
+            action="act_work_center_handling_unit_assignment"
+            sequence="20" id="menu_work_center_handling_unit_assignment"/>
+
+        <record model="ir.model.access" id="access_production_handling_unit">
+            <field name="model">production.handling_unit</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_production_handling_unit_admin">
+            <field name="model">production.handling_unit</field>
+            <field name="group" ref="production.group_production_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.model.access" id="access_work_center_handling_unit_assignment">
+            <field name="model">production.work.center.handling_unit.assignment</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_work_center_handling_unit_assignment_admin">
+            <field name="model">production.work.center.handling_unit.assignment</field>
+            <field name="group" ref="production.group_production_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.rule.group" id="rule_group_production_handling_unit_company">
+            <field name="name">User in companies</field>
+            <field name="model">production.handling_unit</field>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_production_handling_unit_company">
+            <field name="domain" eval="[('company', 'in', Eval('companies', []))]" pyson="1"/>
+            <field name="rule_group" ref="rule_group_production_handling_unit_company"/>
+        </record>
+
+        <record model="ir.rule.group" id="rule_group_work_center_handling_unit_assignment_company">
+            <field name="name">User in companies</field>
+            <field name="model">production.work.center.handling_unit.assignment</field>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_work_center_handling_unit_assignment_company">
+            <field name="domain" eval="[('company', 'in', Eval('companies', []))]" pyson="1"/>
+            <field name="rule_group" ref="rule_group_work_center_handling_unit_assignment_company"/>
+        </record>
+
+        <record model="ir.ui.view" id="work_cycle_view_form">
+            <field name="model">production.work.cycle</field>
+            <field name="inherit" ref="production_work.work_cycle_view_form"/>
+            <field name="name">work_cycle_form</field>
+        </record>
+        <record model="ir.ui.view" id="work_cycle_view_list">
+            <field name="model">production.work.cycle</field>
+            <field name="inherit" ref="production_work.work_cycle_view_list"/>
+            <field name="name">work_cycle_list</field>
+        </record>
+
+        <record model="ir.ui.view" id="work_center_view_form">
+            <field name="model">production.work.center</field>
+            <field name="inherit" ref="production_work.work_center_view_form"/>
+            <field name="name">work_center_form</field>
+        </record>
+    </data>
+</tryton>

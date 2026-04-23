@@ -1,0 +1,6 @@
+<tree>
+    <field name="name"/>
+    <field name="code"/>
+    <field name="company"/>
+    <field name="active"/>
+</tree>

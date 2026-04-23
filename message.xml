@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+        <record model="ir.message" id="msg_work_cycle_duplicate_handling_unit_number">
+          <field name="text">Handling unit number "%(handling_unit_number)s" is already being used in production "%(production)s" or operation "%(operation)s" with an unfinished cycle. Continue anyway?</field>
+        </record>
+    </data>
+</tryton>

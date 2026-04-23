@@ -1,0 +1,7 @@
+<data>
+    <xpath expr="/tree/field[@name='duration']" position="before">
+        <field name="handling_unit"/>
+        <field name="handling_unit_number"/>
+        <field name="missing_units"/>
+    </xpath>
+</data>

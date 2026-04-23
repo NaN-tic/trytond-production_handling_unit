@@ -1,0 +1,11 @@
+<data>
+    <xpath expr="/form/label[@name='duration']" position="before">
+        <label name="handling_unit"/>
+        <field name="handling_unit"/>
+        <label name="handling_unit_number"/>
+        <field name="handling_unit_number"/>
+        <label name="missing_units"/>
+        <field name="missing_units"/>
+        <newline/>
+    </xpath>
+</data>

@@ -1,0 +1,6 @@
+<data>
+    <xpath expr="/form/notebook/page[@id='production']" position="inside">
+        <separator name="production_handling_unit_assignments" colspan="4"/>
+        <field name="production_handling_unit_assignments" colspan="4"/>
+    </xpath>
+</data>
