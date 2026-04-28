@@ -161,7 +161,11 @@ class WorkCycle(metaclass=PoolMeta):
             return None
         return Work(work_id)
 
-    @fields.depends('work', 'handling_unit_number')
+    @fields.depends(
+        'work',
+        '_parent_work.operation',
+        '_parent_work.production',
+        'handling_unit_number')
     def on_change_work(self):
         if not self.work:
             return
