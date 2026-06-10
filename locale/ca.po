@@ -18,6 +18,10 @@ msgctxt "field:production.handling_unit,active:"
 msgid "Active"
 msgstr "Actiu"
 
+msgctxt "field:production.handling_unit,description:"
+msgid "description"
+msgstr "Descripció"
+
 msgctxt "field:production.work.center.handling_unit.assignment,company:"
 msgid "Company"
 msgstr "Empresa"
@@ -82,9 +86,29 @@ msgctxt "model:ir.ui.menu,name:menu_production_handling_unit_configuration"
 msgid "Unidad de Manipulación"
 msgstr "Unitat de manipulació"
 
+msgctxt "model:ir.ui.menu,name:menu_production_handling_unit"
+msgid "Handling Units"
+msgstr "Unitats de manipulació"
+
+msgctxt "model:ir.ui.menu,name:menu_work_center_handling_unit_assignment"
+msgid "Work Center HU Assignments"
+msgstr "Assignacions d'HU per centre"
+
 msgctxt "model:ir.message,text:msg_work_cycle_duplicate_handling_unit_number"
 msgid "Handling unit number \"%(handling_unit_number)s\" is already being used in production \"%(production)s\" or operation \"%(operation)s\" with an unfinished cycle. Continue anyway?"
 msgstr "El número d'unitat de manipulació \"%(handling_unit_number)s\" ja s'està fent servir a la producció \"%(production)s\" o a l'operació \"%(operation)s\" amb un cicle sense finalitzar. Continuar igualment?"
+
+msgctxt "model:ir.rule.group,name:rule_group_production_handling_unit_company"
+msgid "User in companies"
+msgstr "Usuari en empreses"
+
+msgctxt "model:ir.rule.group,name:rule_group_work_center_handling_unit_assignment_company"
+msgid "User in companies"
+msgstr "Usuari en empreses"
+
+msgctxt "model:production.work.center.handling_unit.assignment.constraint:work_center_product_handling_unit_uniq"
+msgid "The assignment must be unique per company, work center, product and handling unit."
+msgstr "L'assignació ha de ser única per empresa, centre de treball, producte i unitat de manipulació."
 
 msgctxt "model:production.handling_unit,name:"
 msgid "Handling Unit"
