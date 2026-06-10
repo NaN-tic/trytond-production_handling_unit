@@ -220,11 +220,20 @@ class WorkCycle(metaclass=PoolMeta):
                     or not cycle.work or not cycle.work.operation):
                 continue
 
-            duplicates = cls.search([
+            domain = [
                 ('handling_unit_number', '=', cycle.handling_unit_number),
+                ('state', 'not in', ['done', 'cancelled']),
                 ('work.production.state', 'not in', ['done', 'cancelled']),
                 ('work.production', '=', cycle.work.production.id),
-                ], limit=1)
+                ]
+            if cycle.id:
+                domain.append(('id', '!=', cycle.id))
+            if cycle.work.sequence is not None:
+                domain.append(('work.sequence', '>=', cycle.work.sequence))
+            else:
+                domain.append(('work.operation', '=', cycle.work.operation.id))
+
+            duplicates = cls.search(domain, limit=1)
 
             if not duplicates:
                 continue
