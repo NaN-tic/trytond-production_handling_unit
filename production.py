@@ -118,7 +118,19 @@ class WorkCycle(metaclass=PoolMeta):
     def _get_operation_handling_unit_from_work(cls, work):
         if not work or not work.operation:
             return None
-        return work.operation.handling_unit
+        handling_unit = work.operation.handling_unit
+        if handling_unit:
+            return handling_unit
+        source_operations = (
+            getattr(work.operation, 'handling_unit_source_operations', None)
+            or [])
+        for source_operation in sorted(
+                source_operations,
+                key=lambda operation: getattr(operation, 'id', operation)):
+            handling_unit = getattr(source_operation, 'handling_unit', None)
+            if handling_unit:
+                return handling_unit
+        return None
 
     @classmethod
     def _get_assignment_from_work(cls, work):
