@@ -2,6 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "field:production.routing.operation,handling_unit_source_operations:"
+msgid "Handling Unit Source Operations"
+msgstr "Operaciones de origen de la unidad de manipulación"
+
 msgctxt "field:production.handling_unit,name:"
 msgid "Name"
 msgstr "Nombre"
