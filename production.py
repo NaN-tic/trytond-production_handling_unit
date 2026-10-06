@@ -186,25 +186,27 @@ class WorkCycle(metaclass=PoolMeta):
             self.handling_unit = handling_unit
 
     @classmethod
-    def create(cls, vlist):
+    def preprocess_values(cls, mode, values):
+        values = super().preprocess_values(mode, values)
+        if mode != 'create' or not values.get('work'):
+            return values
+
         pool = Pool()
         Work = pool.get('production.work')
-
-        vlist = [values.copy() for values in vlist]
-        work_ids = {values.get('work') for values in vlist if values.get('work')}
-        works = {w.id: w for w in Work.browse(work_ids)}
-        for values in vlist:
-            work = works.get(values.get('work'))
-            if not work:
-                continue
-            handling_unit = cls._get_handling_unit_from_work(work)
-            if handling_unit:
-                values.setdefault('handling_unit', handling_unit.id)
-        return super().create(vlist)
+        work = Work(values['work'])
+        handling_unit = cls._get_handling_unit_from_work(work)
+        if handling_unit:
+            values.setdefault('handling_unit', handling_unit.id)
+        return values
 
     @classmethod
-    def default_get(cls, fields_names, with_rec_name=True):
-        defaults = super().default_get(fields_names, with_rec_name=with_rec_name)
+    def default_get(
+            cls, fields_names=None, with_rec_name=True, with_default=True):
+        if fields_names is None:
+            fields_names = cls._fields.keys()
+        defaults = super().default_get(
+            fields_names, with_rec_name=with_rec_name,
+            with_default=with_default)
 
         work = cls._get_work_from_context()
         if not work:
