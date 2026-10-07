@@ -65,8 +65,8 @@ class WorkCenterHandlingUnitAssignment(ModelSQL, ModelView):
             ('work_center_product_handling_unit_uniq',
                 Unique(table, table.company, table.work_center, table.product,
                     table.handling_unit),
-                'The assignment must be unique per company, work center, '
-                'product and handling unit.'),
+                'production_handling_unit.'
+                'msg_work_center_product_handling_unit_unique'),
             ]
 
     @staticmethod
