@@ -2,6 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "field:production.routing.operation,handling_unit_source_operations:"
+msgid "Operations to Retrieve Cycles From"
+msgstr "Operacions de les quals recuperar cicles"
+
 msgctxt "field:production.handling_unit,name:"
 msgid "Name"
 msgstr "Nom"
@@ -80,7 +84,7 @@ msgstr "Unitats de manipulació"
 
 msgctxt "model:ir.action,name:act_work_center_handling_unit_assignment"
 msgid "Work Center HU Assignments"
-msgstr "Assignacions d'HU per centre"
+msgstr "Assignacions d'unitats de manipulació per centre de treball"
 
 msgctxt "model:ir.ui.menu,name:menu_production_handling_unit_configuration"
 msgid "Unidad de Manipulación"
@@ -92,7 +96,7 @@ msgstr "Unitats de manipulació"
 
 msgctxt "model:ir.ui.menu,name:menu_work_center_handling_unit_assignment"
 msgid "Work Center HU Assignments"
-msgstr "Assignacions d'HU per centre"
+msgstr "Assignacions d'unitats de manipulació per centre de treball"
 
 msgctxt "model:ir.message,text:msg_work_cycle_duplicate_handling_unit_number"
 msgid "Handling unit number \"%(handling_unit_number)s\" is already being used in production \"%(production)s\" or operation \"%(operation)s\" with an unfinished cycle. Continue anyway?"
@@ -106,7 +110,7 @@ msgctxt "model:ir.rule.group,name:rule_group_work_center_handling_unit_assignmen
 msgid "User in companies"
 msgstr "Usuari en empreses"
 
-msgctxt "model:production.work.center.handling_unit.assignment.constraint:work_center_product_handling_unit_uniq"
+msgctxt "model:ir.message,text:msg_work_center_product_handling_unit_unique"
 msgid "The assignment must be unique per company, work center, product and handling unit."
 msgstr "L'assignació ha de ser única per empresa, centre de treball, producte i unitat de manipulació."
 
@@ -117,3 +121,17 @@ msgstr "Unitat de manipulació"
 msgctxt "model:production.work.center.handling_unit.assignment,name:"
 msgid "Work Center Handling Unit Assignment"
 msgstr "Assignació d'unitat de manipulació per centre de treball"
+
+msgctxt "field:production.routing.operation-handling_unit.source,operation:"
+msgid "Operation"
+msgstr "Operació"
+
+msgctxt ""
+"field:production.routing.operation-handling_unit.source,source_operation:"
+msgid "Source Operation"
+msgstr "Operació d'origen"
+
+msgctxt "model:production.routing.operation-handling_unit.source,name:"
+msgid "Routing Operation Handling Unit Source"
+msgstr ""
+"Relació entre operació i operació d'origen de la unitat de manipulació"

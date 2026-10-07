@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <tryton>
     <data>
+        <record model="ir.message" id="msg_work_center_product_handling_unit_unique">
+            <field name="text">The assignment must be unique per company, work center, product and handling unit.</field>
+        </record>
         <record model="ir.message" id="msg_work_cycle_duplicate_handling_unit_number">
           <field name="text">Handling unit number "%(handling_unit_number)s" is already being used in production "%(production)s" or operation "%(operation)s" with an unfinished cycle. Continue anyway?</field>
         </record>

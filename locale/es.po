@@ -3,8 +3,8 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 msgctxt "field:production.routing.operation,handling_unit_source_operations:"
-msgid "Handling Unit Source Operations"
-msgstr "Operaciones de origen de la unidad de manipulación"
+msgid "Operations to Retrieve Cycles From"
+msgstr "Operaciones de las que recuperar ciclos"
 
 msgctxt "field:production.handling_unit,name:"
 msgid "Name"
@@ -84,7 +84,7 @@ msgstr "Unidades de manipulación"
 
 msgctxt "model:ir.action,name:act_work_center_handling_unit_assignment"
 msgid "Work Center HU Assignments"
-msgstr "Asignaciones de HU por centro"
+msgstr "Asignaciones de unidades de manipulación por centro de trabajo"
 
 msgctxt "model:ir.ui.menu,name:menu_production_handling_unit_configuration"
 msgid "Unidad de Manipulación"
@@ -96,7 +96,7 @@ msgstr "Unidades de manipulación"
 
 msgctxt "model:ir.ui.menu,name:menu_work_center_handling_unit_assignment"
 msgid "Work Center HU Assignments"
-msgstr "Asignaciones de HU por centro"
+msgstr "Asignaciones de unidades de manipulación por centro de trabajo"
 
 msgctxt "model:ir.message,text:msg_work_cycle_duplicate_handling_unit_number"
 msgid "Handling unit number \"%(handling_unit_number)s\" is already being used in production \"%(production)s\" or operation \"%(operation)s\" with an unfinished cycle. Continue anyway?"
@@ -110,7 +110,7 @@ msgctxt "model:ir.rule.group,name:rule_group_work_center_handling_unit_assignmen
 msgid "User in companies"
 msgstr "Usuario en empresas"
 
-msgctxt "model:production.work.center.handling_unit.assignment.constraint:work_center_product_handling_unit_uniq"
+msgctxt "model:ir.message,text:msg_work_center_product_handling_unit_unique"
 msgid "The assignment must be unique per company, work center, product and handling unit."
 msgstr "La asignación debe ser única por empresa, centro de trabajo, producto y unidad de manipulación."
 
@@ -121,3 +121,17 @@ msgstr "Unidad de manipulación"
 msgctxt "model:production.work.center.handling_unit.assignment,name:"
 msgid "Work Center Handling Unit Assignment"
 msgstr "Asignación de unidad de manipulación por centro de trabajo"
+
+msgctxt "field:production.routing.operation-handling_unit.source,operation:"
+msgid "Operation"
+msgstr "Operación"
+
+msgctxt ""
+"field:production.routing.operation-handling_unit.source,source_operation:"
+msgid "Source Operation"
+msgstr "Operación de origen"
+
+msgctxt "model:production.routing.operation-handling_unit.source,name:"
+msgid "Routing Operation Handling Unit Source"
+msgstr ""
+"Relación entre operación y operación de origen de la unidad de manipulación"
