@@ -23,4 +23,4 @@ class RoutingOperation(metaclass=PoolMeta):
     handling_unit_source_operations = fields.Many2Many(
         'production.routing.operation-handling_unit.source',
         'operation', 'source_operation',
-        'Handling Unit Source Operations')
+        'Operations to Retrieve Cycles From')
