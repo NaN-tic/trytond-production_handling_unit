@@ -6,5 +6,10 @@
             <field name="inherit" ref="production_routing.operation_view_form"/>
             <field name="name">routing_operation_form</field>
         </record>
+        <record model="ir.ui.view" id="routing_step_view_form">
+            <field name="model">production.routing.step</field>
+            <field name="inherit" ref="production_routing.routing_step_view_form"/>
+            <field name="name">routing_step_form</field>
+        </record>
     </data>
 </tryton>

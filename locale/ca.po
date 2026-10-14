@@ -74,7 +74,7 @@ msgctxt "field:production.work.cycle,missing_units:"
 msgid "Missing Units"
 msgstr "Unitats mancants"
 
-msgctxt "field:production.routing.operation,handling_unit:"
+msgctxt "field:production.routing.step,handling_unit:"
 msgid "Handling Unit"
 msgstr "Unitat de manipulació"
 
@@ -135,3 +135,7 @@ msgctxt "model:production.routing.operation-handling_unit.source,name:"
 msgid "Routing Operation Handling Unit Source"
 msgstr ""
 "Relació entre operació i operació d'origen de la unitat de manipulació"
+
+msgctxt "field:production.routing.step,show_handling_unit_values:"
+msgid "Show Handling Unit Values"
+msgstr "Mostrar valors d'unitat de manipulació"
