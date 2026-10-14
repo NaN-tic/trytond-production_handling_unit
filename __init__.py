@@ -11,8 +11,10 @@ def register():
         production.HandlingUnit,
         production.WorkCenterHandlingUnitAssignment,
         production.WorkCenter,
+        production.Work,
         production.WorkCycle,
         routing.RoutingOperationHandlingUnitSource,
         routing.RoutingOperation,
+        routing.RoutingStep,
         product.Product,
         module='production_handling_unit', type_='model')

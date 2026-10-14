@@ -89,6 +89,52 @@ class WorkCenter(sequence_ordered(), metaclass=PoolMeta):
         depends=['company'])
 
 
+class Work(metaclass=PoolMeta):
+    __name__ = 'production.work'
+
+    routing_step = fields.Many2One(
+        'production.routing.step', 'Routing Step', readonly=True,
+        ondelete='SET NULL')
+
+    @classmethod
+    def __register__(cls, module):
+        super().__register__(module)
+        # Link existing works only when the routing, operation and sequence
+        # identify a single step. Never guess between repeated operations.
+        cursor = Transaction().connection.cursor()
+        cursor.execute("""
+            UPDATE production_work
+            SET routing_step = (
+                SELECT MIN(s.id) FROM production_routing_step s
+                JOIN production p ON p.routing = s.routing
+                WHERE p.id = production_work.production
+                    AND s.operation = production_work.operation
+                    AND (s.sequence = production_work.sequence
+                        OR (s.sequence IS NULL
+                            AND production_work.sequence IS NULL)))
+            WHERE routing_step IS NULL AND (
+                SELECT COUNT(*) FROM production_routing_step s
+                JOIN production p ON p.routing = s.routing
+                WHERE p.id = production_work.production
+                    AND s.operation = production_work.operation
+                    AND (s.sequence = production_work.sequence
+                        OR (s.sequence IS NULL
+                            AND production_work.sequence IS NULL))) = 1
+            """)
+
+    def get_handling_unit(self):
+        if not self.routing_step:
+            return None
+        if self.routing_step.handling_unit:
+            return self.routing_step.handling_unit
+        source_operations = self.operation.handling_unit_source_operations
+        for operation in sorted(source_operations, key=lambda item: item.id):
+            for step in self.routing_step.routing.steps:
+                if step.operation == operation and step.handling_unit:
+                    return step.handling_unit
+        return None
+
+
 class WorkCycle(metaclass=PoolMeta):
     __name__ = 'production.work.cycle'
 
@@ -115,24 +161,6 @@ class WorkCycle(metaclass=PoolMeta):
         depends=['state'])
 
     @classmethod
-    def _get_operation_handling_unit_from_work(cls, work):
-        if not work or not work.operation:
-            return None
-        handling_unit = work.operation.handling_unit
-        if handling_unit:
-            return handling_unit
-        source_operations = (
-            getattr(work.operation, 'handling_unit_source_operations', None)
-            or [])
-        for source_operation in sorted(
-                source_operations,
-                key=lambda operation: getattr(operation, 'id', operation)):
-            handling_unit = getattr(source_operation, 'handling_unit', None)
-            if handling_unit:
-                return handling_unit
-        return None
-
-    @classmethod
     def _get_assignment_from_work(cls, work):
         pool = Pool()
         Assignment = pool.get('production.work.center.handling_unit.assignment')
@@ -156,10 +184,9 @@ class WorkCycle(metaclass=PoolMeta):
 
     @classmethod
     def _get_handling_unit_from_work(cls, work):
-        operation_handling_unit = cls._get_operation_handling_unit_from_work(
-            work)
-        if operation_handling_unit:
-            return operation_handling_unit
+        step_handling_unit = work.get_handling_unit() if work else None
+        if step_handling_unit:
+            return step_handling_unit
         assignment = cls._get_assignment_from_work(work)
         return assignment.handling_unit if assignment else None
 
@@ -175,7 +202,7 @@ class WorkCycle(metaclass=PoolMeta):
 
     @fields.depends(
         'work',
-        '_parent_work.operation',
+        '_parent_work.routing_step',
         '_parent_work.production',
         'handling_unit_number')
     def on_change_work(self):
