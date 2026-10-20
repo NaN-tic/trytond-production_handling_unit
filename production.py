@@ -245,9 +245,11 @@ class WorkCycle(metaclass=PoolMeta):
         return defaults
 
     @classmethod
-    def validate(cls, cycles):
-        super().validate(cycles)
-        cls.check_duplicate_handling_unit_number(cycles)
+    def validate_fields(cls, cycles, field_names):
+        super().validate_fields(cycles, field_names)
+        if field_names is None or {
+                'work', 'handling_unit_number', 'state'} & set(field_names):
+            cls.check_duplicate_handling_unit_number(cycles)
 
     @classmethod
     def check_duplicate_handling_unit_number(cls, cycles):
