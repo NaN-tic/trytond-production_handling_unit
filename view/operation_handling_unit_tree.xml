@@ -1,0 +1,5 @@
+<tree>
+    <field name="company"/><field name="mode"/>
+    <field name="handling_unit"/><field name="number_required"/>
+    <field name="uom"/><field name="show_missing_units"/>
+</tree>

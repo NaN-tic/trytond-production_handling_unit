@@ -56,7 +56,6 @@ class TestHandlingUnitSources(unittest.TestCase):
             self.assertEqual(works[0].routing_step.id, routing.steps[0].id)
             self.assertEqual(
                 Cycle._get_handling_unit_from_work(works[0]).id, first.id)
-            self.assertEqual(
-                Cycle._get_handling_unit_from_work(works[1]).id, second.id)
+            self.assertIsNone(Cycle._get_handling_unit_from_work(works[1]))
             self.assertEqual(
                 Cycle._get_handling_unit_from_work(works[2]).id, first.id)
