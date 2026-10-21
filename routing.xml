@@ -11,5 +11,66 @@
             <field name="inherit" ref="production_routing.routing_step_view_form"/>
             <field name="name">routing_step_form</field>
         </record>
+        <record model="ir.ui.view" id="operation_handling_unit_view_form">
+            <field name="model">production.operation.handling_unit</field>
+            <field name="type">form</field>
+            <field name="name">operation_handling_unit_form</field>
+        </record>
+        <record model="ir.ui.view" id="operation_handling_unit_view_tree">
+            <field name="model">production.operation.handling_unit</field>
+            <field name="type">tree</field>
+            <field name="name">operation_handling_unit_tree</field>
+        </record>
+        <record model="ir.model.access" id="access_operation_handling_unit">
+            <field name="model">production.operation.handling_unit</field>
+
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_operation_handling_unit_admin">
+            <field name="model">production.operation.handling_unit</field>
+            <field name="group" ref="production.group_production_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        <record model="ir.ui.view" id="step_handling_unit_exception_view_form">
+            <field name="model">production.step.handling_unit.exception</field>
+            <field name="type">form</field>
+            <field name="name">step_handling_unit_exception_form</field>
+        </record>
+        <record model="ir.ui.view" id="step_handling_unit_exception_view_tree">
+            <field name="model">production.step.handling_unit.exception</field>
+            <field name="type">tree</field>
+            <field name="name">step_handling_unit_exception_tree</field>
+        </record>
+        <record model="ir.model.access" id="access_step_handling_unit_exception">
+            <field name="model">production.step.handling_unit.exception</field>
+
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_step_handling_unit_exception_admin">
+            <field name="model">production.step.handling_unit.exception</field>
+            <field name="group" ref="production.group_production_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        <record model="ir.rule.group" id="rule_group_operation_hu_company">
+            <field name="name">User in companies</field>
+            <field name="model">production.operation.handling_unit</field>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_operation_hu_company">
+            <field name="domain" eval="[('company', 'in', Eval('companies', []))]" pyson="1"/>
+            <field name="rule_group" ref="rule_group_operation_hu_company"/>
+        </record>
     </data>
 </tryton>

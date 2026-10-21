@@ -139,3 +139,175 @@ msgstr ""
 msgctxt "field:production.routing.step,show_handling_unit_values:"
 msgid "Show Handling Unit Values"
 msgstr "Mostrar valors d'unitat de manipulació"
+
+msgctxt "field:production.operation.handling_unit,operation:"
+msgid "Operation"
+msgstr "Operació"
+
+msgctxt "field:production.operation.handling_unit,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:production.operation.handling_unit,mode:"
+msgid "Handling Unit Behaviour"
+msgstr "Comportament de la unitat de manipulació"
+
+msgctxt "field:production.operation.handling_unit,handling_unit:"
+msgid "Handling Unit"
+msgstr "Unitat de manipulació"
+
+msgctxt "field:production.operation.handling_unit,number_required:"
+msgid "Container Number Required"
+msgstr "Número de recipient obligatori"
+
+msgctxt "field:production.operation.handling_unit,uom:"
+msgid "UoM"
+msgstr "UdM"
+
+msgctxt "field:production.operation.handling_unit,show_missing_units:"
+msgid "Request Missing Units"
+msgstr "Demanar unitats que falten"
+
+msgctxt "field:production.routing.operation,handling_unit_configurations:"
+msgid "Handling Unit Configuration"
+msgstr "Configuració de la unitat de manipulació"
+
+msgctxt "field:production.routing.step,handling_unit_mode:"
+msgid "Handling Unit Behaviour"
+msgstr "Comportament de la unitat de manipulació"
+
+msgctxt "field:production.routing.step,handling_unit_number_required:"
+msgid "Container Number Required"
+msgstr "Número de recipient obligatori"
+
+msgctxt "field:production.routing.step,handling_unit_uom:"
+msgid "UoM"
+msgstr "UdM"
+
+msgctxt "field:production.routing.step,show_missing_units:"
+msgid "Request Missing Units"
+msgstr "Demanar unitats que falten"
+
+msgctxt "field:production.routing.step,handling_unit_exceptions:"
+msgid "Product and Category Exceptions"
+msgstr "Excepcions per producte i categoria"
+
+msgctxt "field:production.step.handling_unit.exception,step:"
+msgid "Step"
+msgstr "Etapa"
+
+msgctxt "field:production.step.handling_unit.exception,request:"
+msgid "Request Handling Unit"
+msgstr "Demanar unitat de manipulació"
+
+msgctxt "field:production.step.handling_unit.exception,products:"
+msgid "Products"
+msgstr "Productes"
+
+msgctxt "field:production.step.handling_unit.exception,categories:"
+msgid "Categories"
+msgstr "Categories"
+
+msgctxt "field:production.work.cycle,handling_unit_policy:"
+msgid "Handling Unit Behaviour"
+msgstr "Comportament de la unitat de manipulació"
+
+msgctxt "field:production.work.cycle,handling_unit_number_required:"
+msgid "Container Number Required"
+msgstr "Número de recipient obligatori"
+
+msgctxt "field:production.work.cycle,handling_unit_uom:"
+msgid "UoM"
+msgstr "UdM"
+
+msgctxt "field:production.work.cycle,show_missing_units:"
+msgid "Request Missing Units"
+msgstr "Demanar unitats que falten"
+
+msgctxt "selection:production.operation.handling_unit,mode:"
+msgid "Do Not Request"
+msgstr "No demanar"
+
+msgctxt "selection:production.operation.handling_unit,mode:"
+msgid "Enter Container"
+msgstr "Introduir recipient"
+
+msgctxt "selection:production.operation.handling_unit,mode:"
+msgid "Retrieve Previous Container"
+msgstr "Recuperar recipient anterior"
+
+msgctxt "selection:production.routing.step,handling_unit_mode:"
+msgid "Do Not Request"
+msgstr "No demanar"
+
+msgctxt "selection:production.routing.step,handling_unit_mode:"
+msgid "Enter Container"
+msgstr "Introduir recipient"
+
+msgctxt "selection:production.routing.step,handling_unit_mode:"
+msgid "Retrieve Previous Container"
+msgstr "Recuperar recipient anterior"
+
+msgctxt "selection:production.routing.step,handling_unit_mode:"
+msgid "Inherit from Operation"
+msgstr "Heretar de l’operació"
+
+msgctxt "selection:production.work.cycle,handling_unit_policy:"
+msgid "Do Not Request"
+msgstr "No demanar"
+
+msgctxt "selection:production.work.cycle,handling_unit_policy:"
+msgid "Enter Container"
+msgstr "Introduir recipient"
+
+msgctxt "selection:production.work.cycle,handling_unit_policy:"
+msgid "Retrieve Previous Container"
+msgstr "Recuperar recipient anterior"
+
+msgctxt "model:ir.message,text:msg_policy_unique"
+msgid "Only one handling unit configuration is allowed per operation and company."
+msgstr "Només es permet una configuració de la unitat de manipulació per operació i empresa."
+
+msgctxt "model:ir.message,text:msg_exception_empty"
+msgid "Select at least one product or category for the exception."
+msgstr "Selecciona com a mínim un producte o categoria per a l’excepció."
+
+msgctxt "model:ir.message,text:msg_exception_conflict"
+msgid "Contradictory handling unit exceptions for step \"%(step)s\". Review overlapping products and categories."
+msgstr "Excepcions contradictòries a l’etapa \"%(step)s\". Revisa els productes i categories coincidents."
+
+msgctxt "model:ir.message,text:msg_policy_company"
+msgid "The handling unit must belong to the production company."
+msgstr "La unitat de manipulació ha de pertànyer a l’empresa de la producció."
+
+msgctxt "model:ir.message,text:msg_policy_unit_required"
+msgid "Select a handling unit belonging to the production company."
+msgstr "Selecciona una unitat de manipulació de l’empresa de la producció."
+
+msgctxt "model:ir.message,text:msg_policy_number_required"
+msgid "Enter a positive container number before starting the cycle."
+msgstr "Introdueix un número de recipient positiu abans d’iniciar el cicle."
+
+msgctxt "help:production.operation.handling_unit,uom:"
+msgid "Leave empty to use the production unit."
+msgstr "Deixeu-ho buit per utilitzar la unitat de la producció."
+
+msgctxt "help:production.routing.step,handling_unit_uom:"
+msgid "Leave empty to use the production unit."
+msgstr "Deixeu-ho buit per utilitzar la unitat de la producció."
+
+msgctxt "help:production.step.handling_unit.exception,categories:"
+msgid "Includes subcategories. Product exceptions take precedence."
+msgstr "Inclou subcategories. Les excepcions de producte tenen prioritat."
+
+msgctxt "view:production.routing.step:"
+msgid "Handling Unit"
+msgstr "Unitat de manipulació"
+
+msgctxt "model:ir.message,text:msg_policy_source_required"
+msgid "Select a previous cycle with the same container and production."
+msgstr "Selecciona un cicle anterior amb el mateix recipient i producció."
+
+msgctxt "field:production.work.cycle,handling_unit_source_cycle:"
+msgid "Source Container Cycle"
+msgstr "Cicle d’origen del recipient"

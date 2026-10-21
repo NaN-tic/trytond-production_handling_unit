@@ -1,5 +1,8 @@
 <data>
-    <xpath expr="/form/field[@name='name']" position="after">
+    <xpath expr="/form" position="inside">
+        <separator name="handling_unit_configurations" colspan="4"/>
+        <field name="handling_unit_configurations" colspan="4"/>
+        <separator name="handling_unit_source_operations" colspan="4"/>
         <field name="handling_unit_source_operations" colspan="4"/>
     </xpath>
 </data>
