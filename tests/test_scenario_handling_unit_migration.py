@@ -48,12 +48,16 @@ class TestHandlingUnitMigration(unittest.TestCase):
             handler = Step.__table_handler__('production_handling_unit')
             handler.drop_column('handling_unit')
             handler.drop_column('show_handling_unit_values')
+            handler.drop_column('handling_unit_mode')
             Step.__register__('production_handling_unit')
             step = Step.__table__()
             cursor.execute(*step.select(
                 step.handling_unit, step.show_handling_unit_values,
                 where=step.routing == routing.id, order_by=step.sequence))
             self.assertEqual(cursor.fetchall(), [(unit.id, False)] * 2)
+            cursor.execute(*step.select(step.handling_unit_mode,
+                step.show_missing_units, where=step.routing == routing.id))
+            self.assertEqual(cursor.fetchall(), [('none', True)] * 2)
             cursor.execute(*step.update(
                 [step.handling_unit, step.show_handling_unit_values],
                 [None, True], where=step.id == first_step_id))

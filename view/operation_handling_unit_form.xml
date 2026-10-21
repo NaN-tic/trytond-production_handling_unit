@@ -1,0 +1,8 @@
+<form>
+    <label name="company"/><field name="company"/>
+    <label name="mode"/><field name="mode"/>
+    <label name="handling_unit"/><field name="handling_unit"/>
+    <label name="number_required"/><field name="number_required"/>
+    <label name="uom"/><field name="uom"/>
+    <label name="show_missing_units"/><field name="show_missing_units"/>
+</form>

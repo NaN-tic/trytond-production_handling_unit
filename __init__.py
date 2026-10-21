@@ -3,11 +3,15 @@
 
 from trytond.pool import Pool
 
-from . import production, product, routing
+from . import production, product, routing, policy
 
 
 def register():
     Pool.register(
+        policy.OperationHandlingUnit,
+        policy.StepHandlingUnitException,
+        policy.ExceptionProduct,
+        policy.ExceptionCategory,
         production.HandlingUnit,
         production.WorkCenterHandlingUnitAssignment,
         production.WorkCenter,
