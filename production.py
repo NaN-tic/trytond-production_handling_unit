@@ -2,7 +2,7 @@
 # copyright notices and license terms.
 import hashlib
 
-from trytond.exceptions import UserWarning
+from trytond.exceptions import UserError, UserWarning
 from trytond.i18n import gettext
 from trytond.model import ModelSQL, ModelView, Unique, fields, sequence_ordered
 from trytond.pool import Pool, PoolMeta
@@ -123,20 +123,151 @@ class Work(metaclass=PoolMeta):
             """)
 
     def get_handling_unit(self):
-        if not self.routing_step:
-            return None
-        if self.routing_step.handling_unit:
-            return self.routing_step.handling_unit
-        source_operations = self.operation.handling_unit_source_operations
-        for operation in sorted(source_operations, key=lambda item: item.id):
-            for step in self.routing_step.routing.steps:
-                if step.operation == operation and step.handling_unit:
-                    return step.handling_unit
-        return None
+        return self.get_handling_unit_policy()['handling_unit']
+
+    def get_handling_unit_policy(self):
+        """Resolve product, category, step and company-operation settings."""
+        step = self.routing_step
+        company = self.production.company if self.production else self.company
+        configurations = self.operation.handling_unit_configurations
+        configuration = next((item for item in configurations
+            if item.company == company), None)
+        inherited = not step or step.handling_unit_mode == 'inherit'
+        unit = None
+        mode = 'none'
+        required = False
+        uom = None
+        missing = False
+        if inherited and configuration:
+            unit = configuration.handling_unit
+            mode = configuration.mode
+            required = configuration.number_required
+            uom = configuration.uom
+            missing = configuration.show_missing_units
+        elif step:
+            unit = step.handling_unit
+            mode = step.handling_unit_mode
+            if mode == 'inherit':
+                mode = 'input' if step.show_handling_unit_values else 'none'
+            required = step.handling_unit_number_required
+            uom = step.handling_unit_uom
+            missing = step.show_missing_units
+
+        # Source operations may supply the container type without a product
+        # assignment. Do not recurse: routings may contain circular sources.
+        if not unit and step:
+            for operation in sorted(
+                    self.operation.handling_unit_source_operations,
+                    key=lambda item: item.id):
+                for source in step.routing.steps:
+                    if source.operation != operation:
+                        continue
+                    source_config = next((item for item in
+                        operation.handling_unit_configurations
+                        if item.company == company), None)
+                    if (source.handling_unit_mode == 'inherit'
+                            and source_config):
+                        unit = source_config.handling_unit
+                    else:
+                        unit = source.handling_unit
+                    if unit:
+                        break
+                if unit:
+                    break
+
+        product = getattr(self.production, 'product', None)
+        if step and product:
+            category_ids = set()
+            for category in product.template.categories:
+                while category and category.id not in category_ids:
+                    category_ids.add(category.id)
+                    category = category.parent
+            product_matches, category_matches = set(), set()
+            for rule in step.handling_unit_exceptions:
+                if product in rule.products:
+                    product_matches.add(rule.request)
+                elif category_ids & {c.id for c in rule.categories}:
+                    category_matches.add(rule.request)
+            matches = product_matches or category_matches
+            if len(matches) > 1:
+                raise UserError(gettext(
+                    'production_handling_unit.msg_exception_conflict',
+                    step=step.rec_name))
+            if matches:
+                request, = matches
+                if not request:
+                    mode = 'none'
+                elif mode == 'none':
+                    mode = 'input'
+        if mode != 'none' and unit and company and unit.company != company:
+            raise UserError(gettext(
+                'production_handling_unit.msg_policy_company'))
+        # Unconfigured legacy steps never requested a container.
+        if not unit and not configuration and not (
+                step and step.handling_unit_exceptions):
+            mode = 'none'
+        return {'mode': mode, 'handling_unit': unit,
+            'number_required': required, 'uom': uom,
+            'show_missing_units': missing,
+            'configured': bool(configuration or step)}
 
 
 class WorkCycle(metaclass=PoolMeta):
     __name__ = 'production.work.cycle'
+
+    handling_unit_policy = fields.Selection([
+        ('none', 'Do Not Request'), ('input', 'Enter Container'),
+        ('previous', 'Retrieve Previous Container'),
+        ], 'Handling Unit Behaviour', readonly=True)
+    handling_unit_number_required = fields.Boolean(
+        'Container Number Required', readonly=True)
+    handling_unit_uom = fields.Many2One('product.uom', 'UoM', readonly=True)
+    show_missing_units = fields.Boolean('Request Missing Units', readonly=True)
+    handling_unit_source_cycle = fields.Many2One('production.work.cycle',
+        'Source Container Cycle', readonly=True, ondelete='RESTRICT')
+
+    @classmethod
+    def __register__(cls, module):
+        handler = cls.__table_handler__(module)
+        migrate = not handler.column_exist('handling_unit_policy')
+        super().__register__(module)
+        if migrate:
+            table = cls.__table__()
+            cursor = Transaction().connection.cursor()
+            cursor.execute(*table.update(
+                [table.handling_unit_policy, table.show_missing_units,
+                    table.handling_unit_number_required],
+                ['none', True, False]))
+            cursor.execute(*table.update([table.handling_unit_policy],
+                ['input'], where=table.handling_unit != None))
+            # Preserve the unit previously obtained from the product-line
+            # assignment when displaying historical cycles.
+            cursor.execute("""
+                UPDATE production_work_cycle AS cycle
+                SET handling_unit_uom = (
+                    SELECT assignment.uom
+                    FROM production_work AS work
+                    JOIN production AS production
+                        ON production.id = work.production
+                    JOIN production_work_center_handling_unit_assignment
+                        AS assignment
+                        ON assignment.company = production.company
+                        AND assignment.work_center = production.line
+                        AND assignment.product = production.product
+                        AND assignment.handling_unit = cycle.handling_unit
+                    WHERE work.id = cycle.work AND assignment.active
+                    LIMIT 1)
+                WHERE cycle.handling_unit IS NOT NULL
+                """)
+
+    def get_handling_unit_policy(self):
+        if not self.handling_unit_policy:
+            return self.work.get_handling_unit_policy()
+        return {'mode': self.handling_unit_policy,
+            'handling_unit': self.handling_unit,
+            'number_required': self.handling_unit_number_required,
+            'uom': self.handling_unit_uom,
+            'show_missing_units': self.show_missing_units}
 
     handling_unit = fields.Many2One(
         'production.handling_unit', 'Handling Unit',
@@ -184,11 +315,10 @@ class WorkCycle(metaclass=PoolMeta):
 
     @classmethod
     def _get_handling_unit_from_work(cls, work):
-        step_handling_unit = work.get_handling_unit() if work else None
-        if step_handling_unit:
-            return step_handling_unit
-        assignment = cls._get_assignment_from_work(work)
-        return assignment.handling_unit if assignment else None
+        if not work:
+            return None
+        policy = work.get_handling_unit_policy()
+        return policy['handling_unit'] if policy['mode'] != 'none' else None
 
     @classmethod
     def _get_work_from_context(cls):
@@ -221,10 +351,41 @@ class WorkCycle(metaclass=PoolMeta):
         pool = Pool()
         Work = pool.get('production.work')
         work = Work(values['work'])
-        handling_unit = cls._get_handling_unit_from_work(work)
-        if handling_unit:
-            values.setdefault('handling_unit', handling_unit.id)
+        policy = work.get_handling_unit_policy()
+        if (policy['mode'] == 'none' and not policy['configured']
+                and values.get('handling_unit')):
+            policy['mode'] = 'input'
+        values['handling_unit_policy'] = policy['mode']
+        values['handling_unit_number_required'] = policy['number_required']
+        values['handling_unit_uom'] = (
+            policy['uom'].id if policy['uom'] else None)
+        values['show_missing_units'] = policy['show_missing_units']
+        if policy['mode'] == 'none':
+            values['handling_unit'] = None
+            values['handling_unit_number'] = None
+        elif policy['handling_unit'] and not values.get('handling_unit'):
+            values['handling_unit'] = policy['handling_unit'].id
         return values
+
+    @classmethod
+    def write(cls, *args):
+        actions = []
+        for cycles, values in zip(args[0::2], args[1::2]):
+            for cycle in cycles:
+                updated = values.copy()
+                if (cycle.state == 'draft' and values.get('handling_unit')
+                        and cycle.handling_unit_policy == 'none'):
+                    policy = cycle.work.get_handling_unit_policy()
+                    if policy['mode'] != 'none':
+                        updated.update(
+                            handling_unit_policy=policy['mode'],
+                            handling_unit_number_required=policy[
+                                'number_required'],
+                            handling_unit_uom=(policy['uom'].id
+                                if policy['uom'] else None),
+                            show_missing_units=policy['show_missing_units'])
+                actions.extend(([cycle], updated))
+        super().write(*(actions or args))
 
     @classmethod
     def default_get(
@@ -249,6 +410,33 @@ class WorkCycle(metaclass=PoolMeta):
     @classmethod
     def validate_fields(cls, cycles, field_names):
         super().validate_fields(cycles, field_names)
+        if field_names is None or {
+                'work', 'handling_unit', 'handling_unit_number', 'state'
+                } & set(field_names):
+            for cycle in cycles:
+                if cycle.state != 'running':
+                    continue
+                policy = cycle.get_handling_unit_policy()
+                if policy['mode'] == 'none':
+                    continue
+                if (not cycle.handling_unit
+                        or cycle.handling_unit.company != cycle.company):
+                    raise UserError(gettext(
+                        'production_handling_unit.msg_policy_unit_required'))
+                if policy['number_required'] and (
+                        cycle.handling_unit_number is None
+                        or cycle.handling_unit_number <= 0):
+                    raise UserError(gettext(
+                        'production_handling_unit.msg_policy_number_required'))
+                if policy['mode'] == 'previous':
+                    source = cycle.handling_unit_source_cycle
+                    if (not source or source == cycle
+                            or source.work.production != cycle.work.production
+                            or source.handling_unit != cycle.handling_unit
+                            or source.handling_unit_number
+                            != cycle.handling_unit_number):
+                        raise UserError(gettext(
+                            'production_handling_unit.msg_policy_source_required'))
         if field_names is None or {
                 'work', 'handling_unit_number', 'state'} & set(field_names):
             cls.check_duplicate_handling_unit_number(cycles)

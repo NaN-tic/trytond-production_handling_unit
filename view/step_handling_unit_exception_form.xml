@@ -1,0 +1,7 @@
+<form>
+    <label name="request"/><field name="request"/>
+    <separator name="products" colspan="4"/>
+    <field name="products" colspan="4"/>
+    <separator name="categories" colspan="4"/>
+    <field name="categories" colspan="4"/>
+</form>

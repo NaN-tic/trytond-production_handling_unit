@@ -1,9 +1,17 @@
-<?xml version="1.0"?>
 <data>
     <xpath expr="/form" position="inside">
+        <separator string="Handling Unit" id="handling_unit_policy" colspan="4"/>
+        <label name="handling_unit_mode"/>
+        <field name="handling_unit_mode"/>
         <label name="handling_unit"/>
         <field name="handling_unit"/>
-        <label name="show_handling_unit_values"/>
-        <field name="show_handling_unit_values"/>
+        <label name="handling_unit_number_required"/>
+        <field name="handling_unit_number_required"/>
+        <label name="handling_unit_uom"/>
+        <field name="handling_unit_uom"/>
+        <label name="show_missing_units"/>
+        <field name="show_missing_units"/>
+        <separator name="handling_unit_exceptions" colspan="4"/>
+        <field name="handling_unit_exceptions" colspan="4"/>
     </xpath>
 </data>

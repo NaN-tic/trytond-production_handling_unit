@@ -3,3 +3,26 @@ Production Handling Unit
 
 Adds the handling unit concept to production cycles and work center-product
 assignments.
+
+Handling unit requests
+======================
+
+Configure the container type, entry behaviour, required number, measurement
+unit and missing-unit entry on the routing operation, once per company.
+New routing steps inherit this configuration. A step can instead request a
+container, retrieve a previous container or disable container entry.
+
+Step exceptions can select several products or categories. Categories include
+their descendants. Product exceptions take precedence over category exceptions,
+then the step setting takes precedence over the operation setting. Conflicting
+exceptions at the same priority are rejected.
+
+The operation's source operations define where to retrieve previous containers.
+In Valero, selecting a previous cycle retains its container type and number.
+The measurement unit defaults to the production unit; product assignments are
+not required for new cycles.
+
+Upgrades preserve existing step settings as explicit overrides. Select
+"Inherit from Operation" on those steps to use a common configuration.
+Cycles retain a snapshot of their handling-unit settings, so subsequent changes
+to the operation or exceptions do not alter existing cycles.
