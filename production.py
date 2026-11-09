@@ -215,6 +215,16 @@ class Work(metaclass=PoolMeta):
 class WorkCycle(metaclass=PoolMeta):
     __name__ = 'production.work.cycle'
 
+    @classmethod
+    def __setup__(cls):
+        super().__setup__()
+        readonly = Eval('state').in_(['done', 'cancelled'])
+        if cls.work.states.get('readonly'):
+            cls.work.states['readonly'] |= readonly
+        else:
+            cls.work.states['readonly'] = readonly
+        cls.work.depends.add('state')
+
     handling_unit_policy = fields.Selection([
         ('none', 'Do Not Request'), ('input', 'Enter Container'),
         ('previous', 'Retrieve Previous Container'),
